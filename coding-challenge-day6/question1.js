@@ -5,13 +5,11 @@
 
 const input = [1,2,4,591,392,391,2,5,10,2,1,1,1,20,20];
 
-
 const CleanTheRoom = array => {
     const sorted = [...array.sort((a,b)=>a-b)];
     let ordered = [];
     let nestedArrays = [];
-        sorted.map((n,index) =>{
-                
+        sorted.map((n,index) =>{                
                 if (index === 0 || n === nestedArrays[nestedArrays.length-1]){
                     nestedArrays.push(n);
                 } else {
@@ -19,21 +17,17 @@ const CleanTheRoom = array => {
                     nestedArrays = [];
                     nestedArrays.push(n);
                 }
-
             });
-            
+           
             //fix the bug of not adding last item or serie of items at the last cycle of .map (saved in nestedArrays).
             ordered.push(nestedArrays);
         
             ordered = ordered.flatMap(el => el.length === 1 ? el : [el]);
       
-
     return ordered;
-
-    }
-
-
+    };
 
  
 console.log(CleanTheRoom(input));
 
+// [ [ 1, 1, 1, 1 ], [ 2, 2, 2 ], 4, 5, 10, [ 20, 20 ], 391, 392, 591 ] 
