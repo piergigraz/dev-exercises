@@ -6,11 +6,6 @@
 // one to check the date whether is or not readable left to right and viceversa
 // the other button to list all the special dates from year zero to that input date
 
-
-// 02 - 02 - 2020 , It should be check: from left 02 equal to 02 reading backward from right to left
-const input = '02/02/2020';
-
-
 // num of days, function of month and year (february could be 29 instead of 28 if there's leap year)
 // months always 12
 // leap years (IT bisestile,ES año bisesto) every 4 years. If year is year = n*100 it has to be also multiple of 400: (year = n*100 && year = n*400)
@@ -39,7 +34,7 @@ const leapYearCalculator = (start, end) => {
 }
 
 leapYearCalculator(2020,2030);
-console.log(leapYears);
+console.log(`The leap years in the current decade are ${leapYears}`);
 
 // change ItsLongMonth boolean variable if the month is of the array of 31days months or 30days months
 
@@ -67,6 +62,8 @@ const dateToString = (day,month,year) => {
     let currentDate = (''.concat(day,month,year));
     return currentDate;
 };
+
+//Format date from input 02/02/2020 returns 02022020
 const formatInput = (input) =>{
         day = (input.split('/')).shift();
         month = (input.split('/')).slice(1,2).pop();
@@ -74,17 +71,18 @@ const formatInput = (input) =>{
         day = parseInt(day);
         month = parseInt(month);
         year = parseInt(year);
-        //from 02/02/2020 returns 02022020
-        return dateToString(day,month,year);
+    return dateToString(day,month,year);
 }
-
+// Split date 02022020 into 02 , 02 , 2020. Be careful it splits it based on indexes, assuming there are always 8-digit date
 const parsingDate = (stringDate) => {
 // dividing day, month, year strings and then parsing them to integer
-        day = parseInt(stringDate.substring(0,2));
-        month = parseInt(stringDate.substring(2,4));
-        year = parseInt(stringDate.substring(4,8));
+        const date = {
+            day : parseInt(stringDate.substring(0,2)),
+            month : parseInt(stringDate.substring(2,4)),
+            year : parseInt(stringDate.substring(4,8))
+            };
 // I want to use some destructuring and object to get used to them (I don't know if this is unconvenient)
-        return  {day,month,year};
+        return  date;
     };
 
 // check if long or short month
@@ -129,7 +127,7 @@ const parsingDate = (stringDate) => {
 };
 
 // now the real date checker piece!
-//single date checker
+//single date checker, from user input like 02/02/2020
 const dateChecker = (input) => {
 
     let currentDate = formatInput(input);
@@ -151,7 +149,6 @@ const dateChecker = (input) => {
 };
 
 
-console.log(changeDate('28022028'));
 
 
 // all dates checker
@@ -162,3 +159,37 @@ console.log(changeDate('28022028'));
 
 // BE CAREFUL TO INCLUDE AND RUN WISELY THE FUNCTION OF leapYearsCalculator, according to user input
 // now it's just running 2020-2030 range of years
+
+// userInput will grab input from a listener on a webpage 
+
+let userInput = '15/01/2020';
+
+// special days finder, between a given range of years
+const continuousChecker = (input) => {
+
+    let currentDate = input;
+    // let {year} = parsingDate(currentDate);
+    do {
+        for (let i=0;i<5;i++){
+                        if (currentDate[i] == currentDate[currentDate.length-1-i]){
+                            if(i == 3){
+                                sol.push(currentDate);
+                                currentDate = changeDate(currentDate);
+                                break;
+                            }
+                        } else {
+                            currentDate = changeDate(currentDate);
+                            break;
+                        };
+            };
+    
+        
+    } while (sol.length == 0);
+
+    return console.log(sol, currentDate);
+};
+
+// debug
+ continuousChecker(formatInput(userInput));
+
+
