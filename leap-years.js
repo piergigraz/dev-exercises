@@ -24,7 +24,7 @@ let month;
 let year;
 const longestMonths = [1,3,5,7,8,10,12];
 const leapYears = [];
-    
+let superDay;
 
 // Working fine! Function that returns an array of leap years within the given range
 const leapYearCalculator = (start, end) => {
@@ -48,70 +48,79 @@ const CheckMonth = (passedMonth) =>{
 }
 
 
+//useless function
+// const parsing = (digit) =>{
+//     return parseInt(digit);
+// }
 
-const parsing = (digit) =>{
-    return parseInt(digit);
-}
-
-    // splitting the date (still in string format)
+// splitting the date (still in string format)
 day = (date.split('/')).shift();
 month = (date.split('/')).slice(1,2).pop();
 year = (date.split('/',3)).pop();
-day = parsing(day);
-month = parsing(month);
-year = parsing(year);
-console.log(day,month,year);
+day = parseInt(day);
+month = parseInt(month);
+year = parseInt(year);
 //debug purposes 
-day = 29;
-month= 4;
-year = 2021;
-CheckMonth(month);
-// check if long or short month
-//I'm gonna call it changingDate function
-if (day == 30 && month != 2){
-    ItsLongMonth ? day++ : (day = 1, month++, CheckMonth(month)) ;
-// check if it's February of a leap year
-    } else if (day == 28 && month == 2){
-        leapYears.includes(year) ? day++ : (day = 1, month++, CheckMonth(month));
-// increase the day cause we are not close to critical points
-    } else day == 31 ? (day = 1, month++, CheckMonth(month)) : day++;
+//console.log(day,month,year);
 
-// I use CheckMonth when we change month, if not just keep the boolean as it is, avoiding unnecessary tasks
-
-console.log(day,month,year);
-
-
-//number - string transformation. Have to add zero to fill a single digit day or month
-// put the date back together as a String, ready to be checked
 
 const toTwoDigits = (num) => {
     return String(num).length == 1 ? num = '0'+num : num;
 }
+const dateToString = (day,month,year) => {
+        day = toTwoDigits(day);
+        month = toTwoDigits(month);
+        let currentDate = (''.concat(day,month,year));
+        return currentDate;
+    };
 
-day = toTwoDigits(day);
-month = toTwoDigits(month);
+const parsingDate = (stringDate) => {
+// dividing day, month, year strings and then parsing them to integer
+        day = parseInt(stringDate.substring(0,2));
+        month = parseInt(stringDate.substring(2,4));
+        year = parseInt(stringDate.substring(4,8));
+// I want to use some destructuring and object to get used to them
+        return  {day,month,year};
+    };
 
-let currentDate = (''.concat(day,month,year));
+// parsingDate('02022020');
+// console.log(day,month,year);
+// console.log(parsingDate('02012028'));
+
+
+// check if long or short month
+//I'm gonna call it changingDate function
+  const changeDate = (currentDate) => {
+            let {day,month,year} = parsingDate(currentDate);
+            if (day == 30 && month != 2){
+            ItsLongMonth ? day++ : (day = 1, month++, CheckMonth(month)) ;
+        // check if it's February of a leap year
+            } else if (day == 28 && month == 2){
+                leapYears.includes(year) ? day++ : (day = 1, month++, CheckMonth(month));
+        // increase the day cause we are not close to critical points
+            } else (day == 31 || day == 29 && month == 2 ) ? (day = 1, month++, CheckMonth(month)) : day++;
+// I use CheckMonth when we change month, if not just keep the boolean as it is, avoiding unnecessary tasks
+        
+// put the date back together as a String, ready to be checked
+            return dateToString(day,month,year);
+
+};
+
+//debug
+console.log('after',changeDate('20022010'));
+
+
+//ex. 02022020
+
+for (let i=0;i<5;i++){
+                if (currentDate[i] == currentDate[currentDate.length-1-i]){
+                    superDay = ''.concat(currentDate[i]);
+                } else {
+
+                };
+        };
+
 
 //debug purposes
-console.log(currentDate,' - ', day, month, year);
+// console.log(currentDate,' - ', day, month, year);
 
-
-// const changeDate = (date) => {
-//     parseInt(date);
-//     date++;
-//     return toString(date);
-// };
-
-
-// for (let j=2019; j< 2021 ; j++){
-//         for (let i=0;i<5;i++){
-//             if (date[i] == date[date.length-1-i]){
-//                 superDay.concat(date[i]);
-//             } else {
-//                 changeDate(date);
-//             };
-//         };
-//         superDay != '' ? sol.push(superDay) : 0;
-//     changeDate();
-//     }
