@@ -1,3 +1,5 @@
+import { format } from "url";
+
 // Please if you feel confused, use the Readme. 
 // Until I get to the polished version, I'm writing comments and code in a brainstorming way.
 
@@ -8,7 +10,7 @@
 
 
 // 02 - 02 - 2020 , It should be check: from left 02 equal to 02 reading backward from right to left
-const date = '02/02/2020';
+const input = '02/02/2020';
 
 
 // num of days, function of month and year (february could be 29 instead of 28 if there's leap year)
@@ -43,36 +45,33 @@ leapYearCalculator(2020,2030);
 // change ItsLongMonth boolean variable if the month is of the array of 31days months or 30days months
 
 const CheckMonth = (passedMonth) =>{
-        ItsLongMonth = longestMonths.includes(passedMonth);
+        let ItsLongMonth = longestMonths.includes(passedMonth);
         return ItsLongMonth;
 }
-
-
-//useless function
-// const parsing = (digit) =>{
-//     return parseInt(digit);
-// }
-
-// splitting the date (still in string format)
-day = (date.split('/')).shift();
-month = (date.split('/')).slice(1,2).pop();
-year = (date.split('/',3)).pop();
-day = parseInt(day);
-month = parseInt(month);
-year = parseInt(year);
-//debug purposes 
-//console.log(day,month,year);
-
 
 const toTwoDigits = (num) => {
     return String(num).length == 1 ? num = '0'+num : num;
 }
+
 const dateToString = (day,month,year) => {
-        day = toTwoDigits(day);
-        month = toTwoDigits(month);
-        let currentDate = (''.concat(day,month,year));
-        return currentDate;
-    };
+    day = toTwoDigits(day);
+    month = toTwoDigits(month);
+    let currentDate = (''.concat(day,month,year));
+    return currentDate;
+};
+
+const formatInput = (input) =>{
+        day = (input.split('/')).shift();
+        month = (input.split('/')).slice(1,2).pop();
+        year = (input.split('/',3)).pop();
+        day = parseInt(day);
+        month = parseInt(month);
+        year = parseInt(year);
+        //from 02/02/2020 returns 02022020
+        return dateToString(day,month,year);
+}
+
+
 
 const parsingDate = (stringDate) => {
 // dividing day, month, year strings and then parsing them to integer
@@ -106,21 +105,27 @@ const parsingDate = (stringDate) => {
 
 };
 
-//debug
-console.log('after',changeDate('20022010'));
 
+// now the real date checker piece!
 
-//ex. 02022020
+const checkerDate = (input) => {
 
-for (let i=0;i<5;i++){
-                if (currentDate[i] == currentDate[currentDate.length-1-i]){
-                    superDay = ''.concat(currentDate[i]);
-                } else {
-
-                };
+    let currentDate = formatInput(input);
+    for (let i=0;i<5;i++){
+                    if (currentDate[i] == currentDate[currentDate.length-1-i]){
+                        if(i == 3){
+                            sol.push(currentDate);
+                            changeDate(currentDate);
+                            break;
+                        }
+                    } else {
+                        changeDate(currentDate);
+                        break;
+                    };
         };
+    
+    return console.log(sol, currentDate);;
 
+};
 
-//debug purposes
-// console.log(currentDate,' - ', day, month, year);
-
+checkerDate('02/02/2020');
