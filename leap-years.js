@@ -78,7 +78,7 @@ const parsingDate = (stringDate) => {
         day = parseInt(stringDate.substring(0,2));
         month = parseInt(stringDate.substring(2,4));
         year = parseInt(stringDate.substring(4,8));
-// I want to use some destructuring and object to get used to them (I don't if this is unconvenient)
+// I want to use some destructuring and object to get used to them (I don't know if this is unconvenient)
         return  {day,month,year};
     };
 
