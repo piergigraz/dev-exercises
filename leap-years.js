@@ -78,14 +78,9 @@ const parsingDate = (stringDate) => {
         day = parseInt(stringDate.substring(0,2));
         month = parseInt(stringDate.substring(2,4));
         year = parseInt(stringDate.substring(4,8));
-// I want to use some destructuring and object to get used to them
+// I want to use some destructuring and object to get used to them (I don't if this is unconvenient)
         return  {day,month,year};
     };
-
-// parsingDate('02022020');
-// console.log(day,month,year);
-// console.log(parsingDate('02012028'));
-
 
 // check if long or short month
 //I'm gonna call it changingDate function
@@ -105,10 +100,9 @@ const parsingDate = (stringDate) => {
 
 };
 
-
 // now the real date checker piece!
-
-const checkerDate = (input) => {
+//single date checker
+const dateChecker = (input) => {
 
     let currentDate = formatInput(input);
     for (let i=0;i<5;i++){
@@ -128,4 +122,7 @@ const checkerDate = (input) => {
 
 };
 
-checkerDate('02/02/2020');
+dateChecker('02/02/2020');
+
+
+// all dates checker
