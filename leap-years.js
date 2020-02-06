@@ -1,5 +1,3 @@
-import { format } from "url";
-
 // Please if you feel confused, use the Readme. 
 // Until I get to the polished version, I'm writing comments and code in a brainstorming way.
 
@@ -41,12 +39,22 @@ const leapYearCalculator = (start, end) => {
 }
 
 leapYearCalculator(2020,2030);
+console.log(leapYears);
 
 // change ItsLongMonth boolean variable if the month is of the array of 31days months or 30days months
 
-const CheckMonth = (passedMonth) =>{
+const checkMonth = (passedMonth,passedYear) =>{
         let ItsLongMonth = longestMonths.includes(passedMonth);
-        return ItsLongMonth;
+        if(passedMonth == 12) {
+            passedMonth = 1;
+            passedYear++;
+        } else passedMonth++;
+        return {ItsLongMonth,passedMonth,passedYear};
+}
+
+const simpleMonth = (passedMonth) => {
+    let ItsLongMonth = longestMonths.includes(passedMonth);
+    return ItsLongMonth;
 }
 
 const toTwoDigits = (num) => {
@@ -59,7 +67,6 @@ const dateToString = (day,month,year) => {
     let currentDate = (''.concat(day,month,year));
     return currentDate;
 };
-
 const formatInput = (input) =>{
         day = (input.split('/')).shift();
         month = (input.split('/')).slice(1,2).pop();
@@ -71,8 +78,6 @@ const formatInput = (input) =>{
         return dateToString(day,month,year);
 }
 
-
-
 const parsingDate = (stringDate) => {
 // dividing day, month, year strings and then parsing them to integer
         day = parseInt(stringDate.substring(0,2));
@@ -83,17 +88,40 @@ const parsingDate = (stringDate) => {
     };
 
 // check if long or short month
-//I'm gonna call it changingDate function
+//changeDate function : accept an 8-digit string date like '02032012' as argument
   const changeDate = (currentDate) => {
             let {day,month,year} = parsingDate(currentDate);
             if (day == 30 && month != 2){
-            ItsLongMonth ? day++ : (day = 1, month++, CheckMonth(month)) ;
+                let ItsLongMonth = simpleMonth(month);
+                if(ItsLongMonth == true) {
+                    day++;
+                 } else {
+                     day = 1; 
+                     let {longMonth,passedMonth,passedYear} = checkMonth(month,year);
+                     ItsLongMonth = longMonth;
+                     month = passedMonth;
+                     year = passedYear;
+                 };
         // check if it's February of a leap year
             } else if (day == 28 && month == 2){
-                leapYears.includes(year) ? day++ : (day = 1, month++, CheckMonth(month));
+                if(leapYears.includes(year) == true) {
+                    day++; 
+                } else {
+                    day = 1;
+                    let {longMonth,passedMonth,passedYear} = checkMonth(month,year);
+                    ItsLongMonth = longMonth;
+                     month = passedMonth;
+                     year = passedYear;    
+                };
         // increase the day cause we are not close to critical points
-            } else (day == 31 || day == 29 && month == 2 ) ? (day = 1, month++, CheckMonth(month)) : day++;
-// I use CheckMonth when we change month, if not just keep the boolean as it is, avoiding unnecessary tasks
+            } else if(day == 31 || day == 29 && month == 2 )  {
+                day = 1;
+                let {longMonth,passedMonth,passedYear} = checkMonth(month,year);
+                ItsLongMonth = longMonth;
+                month = passedMonth;
+                year = passedYear;
+             } else day++;
+// I use checkMonth when we change month, if not just keep the boolean as it is, avoiding unnecessary tasks
         
 // put the date back together as a String, ready to be checked
             return dateToString(day,month,year);
@@ -118,11 +146,19 @@ const dateChecker = (input) => {
                     };
         };
     
-    return console.log(sol, currentDate);;
+    return console.log(sol, currentDate);
 
 };
 
-dateChecker('02/02/2020');
+
+console.log(changeDate('28022028'));
 
 
 // all dates checker
+
+// solved issues : 
+// no more than 12 months 
+// increasing years
+
+// BE CAREFUL TO INCLUDE AND RUN WISELY THE FUNCTION OF leapYearsCalculator, according to user input
+// now it's just running 2020-2030 range of years
