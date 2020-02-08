@@ -159,8 +159,7 @@ const dateChecker = (input) => {
 
 // userInput will grab input from a listener on a webpage 
 
-let userInput = '01/01/2020';
-const end = 2300;
+// const end = 2100;
 //leapYears[leapYears.length-1];
 // special days finder, between a given range of years
 
@@ -197,5 +196,13 @@ const continuousChecker = (input,end) => {
 };
 
 // debug
- continuousChecker(formatInput(userInput),end);
+
+
+ // start the DOM manipulation section
+
+//  const button = document.querySelector('button');
+// button.addEventListener(('click'), function() {
+//     const userInput = document.getElementById('inputDate').value;
+//     console.log(userInput);
+// } )
 

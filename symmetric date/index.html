@@ -5,14 +5,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Symmetric dates</title>
+    <style>
+        input {
+            font-size:20px;
+        }
+        .root {
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
     <div class="root">
         <input type="text" placeholder="dd/mm/aaaa" id="inputDate">
         <button type="submit" id="enter">Enter</button>
     </div>
+    <div id="main"></div>
 </body>
+<script src=".././leap-years.js"></script>
 <script>
+
+const button = document.querySelector('button');
+button.addEventListener(('click'), function() {
+    const userInput = document.getElementById('inputDate').value;
+    console.log(userInput);
+    let end = prompt(" Till which year whould you like to search? (please use the format YYYY)")
+    console.log(end);
+    continuousChecker(formatInput(userInput),end);
+    const text = document.createTextNode(sol);
+    document.getElementById("main").appendChild(text);
+
+} )
 
 
 </script>
