@@ -33,9 +33,6 @@ const leapYearCalculator = (start, end) => {
     return leapYears;
 }
 
-leapYearCalculator(2020,2030);
-console.log(`The leap years in the current decade are ${leapYears}`);
-
 // change ItsLongMonth boolean variable if the month is of the array of 31days months or 30days months
 
 const checkMonth = (passedMonth,passedYear) =>{
@@ -162,15 +159,24 @@ const dateChecker = (input) => {
 
 // userInput will grab input from a listener on a webpage 
 
-let userInput = '15/01/2020';
-
+let userInput = '01/01/2020';
+const end = 2300;
+//leapYears[leapYears.length-1];
 // special days finder, between a given range of years
-const continuousChecker = (input) => {
 
+leapYears.push(0);
+
+const continuousChecker = (input,end) => {
     let currentDate = input;
-    // let {year} = parsingDate(currentDate);
+    let stop = false;
+    let cycles = 0;
+
+    // let year = parsingDate(currentDate);
     do {
+        cycles++;
         for (let i=0;i<5;i++){
+            let {year} = parsingDate(currentDate);
+
                         if (currentDate[i] == currentDate[currentDate.length-1-i]){
                             if(i == 3){
                                 sol.push(currentDate);
@@ -180,16 +186,16 @@ const continuousChecker = (input) => {
                         } else {
                             currentDate = changeDate(currentDate);
                             break;
-                        };
+                        };  
+            year <= end+1 ? stop == false : stop = true;
+            
             };
-    
-        
-    } while (sol.length == 0);
+            
+    } while (stop == false);
 
-    return console.log(sol, currentDate);
+    return console.log(`it's been a long way to the year ${end}, many things happened, and we lived ${sol.length} symmetric dates, which are: \n\n[${sol}]}]`);
 };
 
 // debug
- continuousChecker(formatInput(userInput));
-
+ continuousChecker(formatInput(userInput),end);
 
