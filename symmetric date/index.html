@@ -5,36 +5,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Symmetric dates</title>
-    <style>
-        input {
-            font-size:20px;
-        }
-        .root {
-            text-align: center;
-        }
-    </style>
+   <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="root">
-        <input type="text" placeholder="dd/mm/aaaa" id="inputDate">
+        <h1>Mum asked me, what are the next symmetric dates?</h1>
+        <h2>Let's discover them!</h2>
+        <ul>
+            <li><input type="text" placeholder="dd/mm/yyyy" id="inputDate"></li>
+            <li><input type="text" placeholder="yyyy" id="endDate"></li>
+        </ul>
         <button type="submit" id="enter">Enter</button>
     </div>
-    <div id="main"></div>
+    <div id="main"><ul id='solution'></ul></div>
 </body>
-<script src=".././leap-years.js"></script>
+<script src="leap-years.js"></script>
 <script>
 
 const button = document.querySelector('button');
 button.addEventListener(('click'), function() {
     const userInput = document.getElementById('inputDate').value;
     console.log(userInput);
-    let end = prompt(" Till which year whould you like to search? (please use the format YYYY)")
-    console.log(end);
+    const end = parseInt(document.getElementById('endDate').value);
     continuousChecker(formatInput(userInput),end);
-    const text = document.createTextNode(sol);
-    document.getElementById("main").appendChild(text);
+    let text = document.createTextNode(sol);
+    const paragraph = document.createElement('li');
+    paragraph.appendChild(text);
+    document.getElementById("solution").appendChild(paragraph);
 
-} )
+} );
+
 
 
 </script>
