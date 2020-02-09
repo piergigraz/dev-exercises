@@ -42,21 +42,21 @@ button {
 #main {
     font-size: large;
     word-spacing: 5px;
-    max-width:50%;
+    width:90vw;
     background:rgb(207, 202, 202);
     border-radius: 10px;
     /* display:flex;   
     flex-direction: column;      */
-    padding:20px;
+    padding:5px;
     margin:10px;
     min-height: 40vh;
-
 
 }
 
 #main li {
     overflow: scroll;
     font-size: 20px;
+    letter-spacing: 2px;
 
 
 }
